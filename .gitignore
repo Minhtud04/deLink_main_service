@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### env var & other secret key ###
+./.env
+

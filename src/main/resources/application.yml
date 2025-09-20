@@ -1,0 +1,47 @@
+server:
+  port: 8081
+  address: 0.0.0.0
+  servlet:
+    context-path: /api/v1
+    session:
+      cookie:
+        same-site: none
+        secure: true
+
+
+spring:
+  application:
+      name: delink
+
+  datasource:
+    url: ${DELINK_DB_URL}
+    username: ${DELINK_DB_USERNAME}
+    password: ${DELINK_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update                  #for local config only
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  session:
+    store-type: redis
+  data:
+      redis:
+        host: ${DELINK_REDIS_HOST}
+        port: ${DELINK_REDIS_PORT}
+
+
+---
+# ===================================================================
+# Dev local PROFILE (dev): Docker Environment
+# ===================================================================
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    redis:
+      ssl:
+        enabled: false
