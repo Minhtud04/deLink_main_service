@@ -11,5 +11,10 @@ RUN ./mvnw package -DskipTests
 FROM eclipse-temurin:17-jre-jammy
 EXPOSE 8081
 WORKDIR /app
+
+RUN mkdir logs
 COPY --from=builder /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+VOLUME /app/logs
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-Dlogging.file.name=/app/logs/application.log", "-jar", "app.jar"]
