@@ -19,9 +19,9 @@ spring:
       name: delink
 
   datasource:
-    url: jdbc-context-test-url
-    username: test-username
-    password: test-pw
+    url: jdbc:postgresql://localhost:5432/deLink_postgres
+    username: minhtud04
+    password: Harmony_love04.,
     driver-class-name: org.postgresql.Driver
 
   jpa:
