@@ -7,6 +7,9 @@ import depauw.mnguyen.delink.models.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.jspecify.annotations.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,16 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
-
+    private final Logger log = LoggerFactory.getLogger(AuthController.class);;
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<AuthResponse>> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<@NonNull ApiResponse<AuthResponse>> register(@Valid @RequestBody RegisterRequest request) {
+        log.info("auth controller reached");
         User newUser = authService.registerNewUser(request);
-
-        authService.authenticateUser(new LoginRequest(request.email(), request.passwordHash()));
 
         ApiResponse response = new ApiResponse(
                 "OK",
@@ -42,27 +44,6 @@ public class AuthController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest request) {
-        User user = authService.authenticateUser(request);
-
-        boolean profileComplete = authService.isProfileComplete(user);
-        String message = profileComplete ? "Login successful." : "Login successful. Please complete your profile.";
-        ApiResponse response = new ApiResponse(
-                "OK",
-                HttpStatus.OK.value(),
-                new AuthResponse(
-                        user.getId(),
-                        user.getFullName(),
-                        user.getRole(),
-                        profileComplete
-                ),
-                message
-        );
-
-        return ResponseEntity.ok(response);
     }
 
 

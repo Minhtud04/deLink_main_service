@@ -8,6 +8,9 @@ server:
         same-site: none
         secure: true
 
+app:
+  security:
+    login-success-url: http://10.1.11.26:3000/ok
 
 spring:
   application:
