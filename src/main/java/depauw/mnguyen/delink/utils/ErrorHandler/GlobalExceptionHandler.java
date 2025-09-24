@@ -36,14 +36,14 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(ErrorException.ResourceNotFound.class)
-    public ResponseEntity<ErrorResponse> handleResourceNotFound(ErrorException.Unauthorization ex) {
+    @ExceptionHandler(ErrorException.Unauthorization.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorization(ErrorException.Unauthorization ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 "ERROR",
-                HttpStatus.NOT_FOUND.value(), // 404
+                HttpStatus.UNAUTHORIZED.value(),
                 ex.getMessage()
         );
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
 

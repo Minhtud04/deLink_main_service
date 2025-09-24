@@ -5,7 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import depauw.mnguyen.delink.models.enums.MatchStatus
+import depauw.mnguyen.delink.models.enums.MatchStatus;
 
 @Entity
 @Table(name = "matches")

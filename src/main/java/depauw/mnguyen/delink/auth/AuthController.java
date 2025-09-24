@@ -28,7 +28,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<AuthResponse>> register(@Valid @RequestBody RegisterRequest request) {
         User newUser = authService.registerNewUser(request);
 
-        authService.login(new LoginRequest(request.email(), request.password()));
+        authService.authenticateUser(new LoginRequest(request.email(), request.passwordHash()));
 
         ApiResponse response = new ApiResponse(
                 "OK",
