@@ -33,5 +33,6 @@ build/
 .vscode/
 
 ### env var & other secret key ###
-./.env
+.env
+logs/
 
